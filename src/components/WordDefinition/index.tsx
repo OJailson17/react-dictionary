@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
+import { Divider } from '../Divider';
 
 export const WordDefinition = () => {
 	return (
@@ -36,7 +37,7 @@ export const WordDefinition = () => {
 						))}
 					</Flex>
 				</Box>
-				<Box w={['80%']} h={['2px']} bg={'#363535'} my={['6']} mx='auto' />
+				<Divider />
 				<Box>
 					<Text fontSize={['24']} mt={['4']}>
 						- a continuous area or expanse which is free, available or
@@ -44,7 +45,7 @@ export const WordDefinition = () => {
 					</Text>
 
 					<Text mt={['4']} color={'#a2a2a2c6'}>
-						"some random frase as en exemple"
+						"some random prase as an example"
 					</Text>
 
 					<Flex mt={['4']} wrap='wrap'>
