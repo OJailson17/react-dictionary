@@ -1,13 +1,26 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { PlayCircle } from 'phosphor-react';
+import { useState } from 'react';
 
-export const WordComponent = () => {
-	function playMusic() {
-		var music = new Audio(
-			'https://api.dictionaryapi.dev/media/pronunciations/en/space-us.mp3',
-		);
-		music.play();
+interface WordComponentProps {
+	word: string;
+	audio: {
+		audio: string;
+		text: string;
+	}[];
+}
+
+export const WordComponent = ({ audio, word }: WordComponentProps) => {
+	// const [phoneticText, setPhoneticText] = useState('');
+
+	// Play audio of the link
+	function playAudio() {
+		var wordAudio = new Audio(audio[0].audio || '');
+		wordAudio.play();
 	}
+
+	// Find the first audio element that contains a text property
+	const phoneticText = audio?.find(pho => pho.text)?.text;
 
 	return (
 		<Flex
@@ -20,7 +33,7 @@ export const WordComponent = () => {
 			borderBottom='2px'
 			borderColor={'#363535'}
 		>
-			<Text fontSize={['96']}>Space</Text>
+			<Text fontSize={['96']}>{word}</Text>
 
 			<Button
 				w={['56']}
@@ -30,12 +43,12 @@ export const WordComponent = () => {
 				display={['flex']}
 				gap={['3']}
 				_hover={{ background: 'transparent' }}
-				onClick={playMusic}
+				onClick={playAudio}
 			>
 				<PlayCircle size={24} weight='fill' />
 
 				<Text fontWeight={'normal'} fontSize={['sm']}>
-					/speɪs/
+					{phoneticText}
 				</Text>
 			</Button>
 		</Flex>

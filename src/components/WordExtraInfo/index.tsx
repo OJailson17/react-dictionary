@@ -12,7 +12,7 @@ export const WordExtraInfo = ({ title, data }: WordExtraInfoProps) => {
 
 			<Flex>
 				<Text mt={['4']} color={'#a2a2a2c6'}>
-					{data}
+					{data || ''}
 				</Text>
 			</Flex>
 		</Box>

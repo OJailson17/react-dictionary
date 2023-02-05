@@ -1,64 +1,91 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { Divider } from '../Divider';
 
-export const WordDefinition = () => {
+interface WordDefinitionProps {
+	meanings?: {
+		partOfSpeech: string;
+		definitions: {
+			definition: string;
+			synonyms: string[];
+			antonyms: string[];
+			example?: string;
+		}[];
+	}[];
+}
+
+export const WordDefinition = ({ meanings }: WordDefinitionProps) => {
+	console.log({ meanings });
+
 	return (
-		<Box flex={'1'} borderRight={'2px'} borderColor={'#363535'}>
-			<Box padding={['5']}>
-				<Text color={'#c4c4c4'}>Noun</Text>
+		<Box flex={'1'} borderColor={'#363535'}>
+			<Grid
+				// h={['100%']}
+				// bg='red'
+				templateRows={['1fr 1fr']}
+				templateColumns={['repeat(2, 1fr)']}
+				// gridRow={'1fr 1fr'}
+				// columns={[2]}
+				columnGap={'12'}
+				// rowGap='2'
+				padding={['5']}
+				// justifyContent='center'
+				// alignItems={'center'}
+			>
+				{meanings?.map((meaning, i) => (
+					<GridItem
+						h={'min-content'}
+						key={`${meaning.definitions} - ${i}`}
+						// bg='green'
+						rowSpan={2}
+						colSpan={i + 1}
+					>
+						<Text color={'#c4c4c4'}>{meaning.partOfSpeech}</Text>
 
-				<Box>
-					<Text fontSize={['24']} mt={['4']}>
-						1. a continuous area or expanse which is free, available or
-						unoccupied.
-					</Text>
+						{meaning.definitions.map((def, i) => (
+							<Box key={`${def.definition} - ${i}`}>
+								<Text fontSize={['24']} mt={['4']}>
+									{def.definition}
+								</Text>
 
-					<Text mt={['4']} color={'#a2a2a2c6'}>
-						"some random frase as en exemple"
-					</Text>
+								{def.example && (
+									<Text mt={['4']} color={'#a2a2a2c6'}>
+										{def.example}
+									</Text>
+								)}
 
-					<Flex mt={['4']} wrap='wrap'>
-						<Text mr={['6']}>synonyms:</Text>
+								{def.synonyms.length > 0 && (
+									<Flex mt={['4']} wrap='wrap'>
+										<Text mr={['6']}>synonyms:</Text>
 
-						{[...Array(4)].map(el => (
-							<Text color={'blue.500'} mx={'1'}>
-								A lot of texts,
-							</Text>
+										{def.synonyms.map((el, i) => (
+											<Text color={'blue.500'} mx={'1'} key={`${el} - ${i}`}>
+												{el},
+											</Text>
+										))}
+									</Flex>
+								)}
+
+								{def.antonyms.length > 0 && (
+									<Flex mt={['4']} wrap='wrap'>
+										<Text mr={['6']}>antonyms:</Text>
+
+										{def.antonyms.map((el, i) => (
+											<Text color={'blue.500'} mx={'1'} key={`${el} - ${i}`}>
+												{el},
+											</Text>
+										))}
+									</Flex>
+								)}
+
+								<Divider />
+							</Box>
 						))}
-					</Flex>
 
-					<Flex mt={['4']} wrap='wrap'>
-						<Text mr={['6']}>antonyms:</Text>
-
-						{[...Array(4)].map(el => (
-							<Text color={'blue.500'} mx={'1'}>
-								A lot of texts,
-							</Text>
-						))}
-					</Flex>
-				</Box>
-				<Divider />
-				<Box>
-					<Text fontSize={['24']} mt={['4']}>
-						- a continuous area or expanse which is free, available or
-						unoccupied.
-					</Text>
-
-					<Text mt={['4']} color={'#a2a2a2c6'}>
-						"some random prase as an example"
-					</Text>
-
-					<Flex mt={['4']} wrap='wrap'>
-						<Text mr={['6']}>synonyms:</Text>
-
-						{[...Array(4)].map(el => (
-							<Text color={'blue.500'} mx={'1'}>
-								A lot of texts,
-							</Text>
-						))}
-					</Flex>
-				</Box>
-			</Box>
+						{/* <Divider /> */}
+					</GridItem>
+				))}
+			</Grid>
 		</Box>
 	);
 };
