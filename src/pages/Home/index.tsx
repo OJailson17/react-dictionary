@@ -54,7 +54,7 @@ export const Home = () => {
 					</Text>
 				))}
 			</Flex>
-			<SearchWord />
+			<SearchWord isHomePage />
 		</Box>
 	);
 };

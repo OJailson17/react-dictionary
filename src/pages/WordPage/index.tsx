@@ -5,6 +5,7 @@ import { SearchWord } from '../../components/SearchWord';
 import { WordComponent } from '../../components/Word';
 import { WordDefinition } from '../../components/WordDefinition';
 import { WordExtraInfo } from '../../components/WordExtraInfo';
+import { useWord } from '../../context/wordContext';
 import { api } from '../../lib/axios';
 
 interface WordDefinitionProps {
@@ -31,20 +32,22 @@ interface Response {
 }
 
 export const WordDefinitionPage = () => {
-	const [wordDefinition, setWordDefinition] = useState(
-		{} as WordDefinitionProps,
-	);
+	// const [wordDefinition, setWordDefinition] = useState(
+	// 	{} as WordDefinitionProps,
+	// );
+
+	const { wordDefinition, searchedWord } = useWord();
 
 	// Make request to get word definition
-	const handleSearchWord = async () => {
-		const response: Response = await api.get('/src/utils/apiReturn.json');
-		const definition = response.data;
-		setWordDefinition(definition[0]);
-	};
+	// const handleSearchWord = async () => {
+	// 	const response: Response = await api.get('/src/utils/apiReturn.json');
+	// 	const definition = response.data;
+	// 	setWordDefinition(definition[0]);
+	// };
 
-	useEffect(() => {
-		handleSearchWord();
-	}, []);
+	// useEffect(() => {
+	// 	handleSearchWord();
+	// }, []);
 
 	return (
 		<>
@@ -57,11 +60,14 @@ export const WordDefinitionPage = () => {
 			)}
 
 			<Flex px={['16']} mb={['28']}>
-				<WordDefinition meanings={wordDefinition.meanings} />
+				<WordDefinition
+					meanings={wordDefinition.meanings}
+					origin={wordDefinition.origin}
+				/>
 
 				{wordDefinition.origin && (
 					<Box flex={'1'}>
-						{/* <WordExtraInfo title='Phrases' data='Some random prhase' /> */}
+						{/* <WordExtraInfo title='Phrases' data='Some random phrase' /> */}
 						{/* <Divider /> */}
 						<WordExtraInfo title='Origin' data={wordDefinition.origin} />
 					</Box>

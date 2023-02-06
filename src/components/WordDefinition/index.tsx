@@ -1,5 +1,7 @@
 import { Box, Flex, Grid, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useWord } from '../../context/wordContext';
 import { Divider } from '../Divider';
 
 interface WordDefinitionProps {
@@ -12,10 +14,19 @@ interface WordDefinitionProps {
 			example?: string;
 		}[];
 	}[];
+	origin?: string;
 }
 
-export const WordDefinition = ({ meanings }: WordDefinitionProps) => {
-	console.log({ meanings });
+export const WordDefinition = ({ meanings, origin }: WordDefinitionProps) => {
+	// console.log({ meanings });
+
+	const { onSearchWord } = useWord();
+
+	const { word } = useParams();
+
+	useEffect(() => {
+		onSearchWord(word || '');
+	}, [word]);
 
 	return (
 		<Box flex={'1'} borderColor={'#363535'}>
@@ -38,7 +49,7 @@ export const WordDefinition = ({ meanings }: WordDefinitionProps) => {
 						key={`${meaning.definitions} - ${i}`}
 						// bg='green'
 						rowSpan={2}
-						colSpan={i + 1}
+						colSpan={!origin ? 1 : 2}
 					>
 						<Text color={'#c4c4c4'}>{meaning.partOfSpeech}</Text>
 
