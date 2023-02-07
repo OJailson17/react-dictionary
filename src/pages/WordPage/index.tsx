@@ -1,5 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { Divider } from '../../components/Divider';
 import { SearchWord } from '../../components/SearchWord';
 import { WordComponent } from '../../components/Word';
@@ -36,7 +37,11 @@ export const WordDefinitionPage = () => {
 	// 	{} as WordDefinitionProps,
 	// );
 
-	const { wordDefinition, searchedWord } = useWord();
+	const { word } = useParams();
+
+	const location = useLocation();
+
+	const { wordDefinition, onSearchWord } = useWord();
 
 	// Make request to get word definition
 	// const handleSearchWord = async () => {
@@ -45,9 +50,9 @@ export const WordDefinitionPage = () => {
 	// 	setWordDefinition(definition[0]);
 	// };
 
-	// useEffect(() => {
-	// 	handleSearchWord();
-	// }, []);
+	useEffect(() => {
+		onSearchWord(word || '');
+	}, [location.pathname]);
 
 	return (
 		<>

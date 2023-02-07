@@ -18,11 +18,11 @@ export const SearchWord = ({ isHomePage = false }: SearchWordProps) => {
 	const handleSearchWord = (e: FormEvent) => {
 		e.preventDefault();
 
-		if (isHomePage) {
-			navigate(`/word/${word}`);
-		} else {
-			onSearchWord(word);
-		}
+		navigate(`/word/${word}`);
+		// onSearchWord(word);
+		// if (isHomePage) {
+		// } else {
+		// }
 	};
 
 	return (

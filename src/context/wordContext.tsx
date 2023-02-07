@@ -1,4 +1,4 @@
-import { QueryCache, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
 	createContext,
 	ReactNode,
@@ -59,21 +59,28 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		error,
 		isFetching,
 		isFetched,
+		refetch,
 	} = useQuery({
 		queryKey: ['word'],
 		queryFn: async () => {
-			const response: Response = await api.get('/src/utils/apiReturn.json');
-			return response.data[0];
+			try {
+				const response: Response = await api.get(`/${searchedWord}`);
+				setWordDefinition(response.data[0]);
+				return response.data[0];
+			} catch (err) {
+				// alert('Error');
+				console.log(error);
+			}
 		},
-		cacheTime: 1000 * 60 * 2, // 2 minutes
+		cacheTime: 1000 * 60 * 5, // 5 minutes
+		staleTime: 1000 * 60 * 2, // 2 minutes
 		enabled: fetchData,
 	});
 
-	const STALE_TIME = 1000 * 60 * 5; // 5 minutes
-
 	useEffect(() => {
-		if (searchedWord !== '') {
-			setFetchData(true);
+		if (searchedWord.length > 0 && searchedWord !== '') {
+			// setFetchData(true);
+			refetch();
 		}
 	}, [searchedWord]);
 
@@ -82,24 +89,9 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 	useEffect(() => {
 		if (!isFetching && wordMeaning) {
 			console.log(wordMeaning);
-			setWordDefinition(wordMeaning);
+			// setWordDefinition(wordMeaning);
 		}
-	}, [isFetched]);
-
-	// const queryCache = new QueryCache({
-	// 	onError: error => {
-	// 		console.log(error);
-	// 	},
-	// 	onSuccess: data => {
-	// 		console.log(data);
-	// 	},
-	// });
-
-	// const query = queryCache.findAll();
-
-	// console.log({ query });
-
-	// const unsubscribe = queryCache.subscribe()
+	}, [isFetching]);
 
 	return (
 		<WordContext.Provider
