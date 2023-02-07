@@ -17,9 +17,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools initialIsOpen={false} />
 			<ChakraProvider theme={theme}>
-				<WordContextProvider>
-					<App />
-				</WordContextProvider>
+				<App />
 			</ChakraProvider>
 		</QueryClientProvider>
 	</React.StrictMode>,

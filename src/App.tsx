@@ -7,12 +7,15 @@ import { SearchWord } from './components/SearchWord';
 import { WordComponent } from './components/Word';
 import { WordDefinition } from './components/WordDefinition';
 import { WordExtraInfo } from './components/WordExtraInfo';
+import { WordContextProvider } from './context/wordContext';
 import { Router } from './Router';
 
 export function App() {
 	return (
 		<BrowserRouter>
-			<Router />
+			<WordContextProvider>
+				<Router />
+			</WordContextProvider>
 		</BrowserRouter>
 	);
 }

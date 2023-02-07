@@ -6,6 +6,7 @@ import {
 	useEffect,
 	useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/axios';
 
 interface WordContextProviderProps {
@@ -48,8 +49,8 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 	const [wordDefinition, setWordDefinition] = useState(
 		{} as WordDefinitionProps,
 	);
-	const [fetchData, setFetchData] = useState(false);
 
+	// Set word from input search to state
 	const handleSearchWord = async (word: string) => {
 		setSearchedWord(word);
 	};
@@ -58,40 +59,50 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		data: wordMeaning,
 		error,
 		isFetching,
-		isFetched,
 		refetch,
+		isError,
 	} = useQuery({
 		queryKey: ['word'],
 		queryFn: async () => {
+			// Get data from api and save it in the wordDefinition state
 			try {
-				const response: Response = await api.get(`/${searchedWord}`);
+				const response: Response = await api.get(`/src/utils/apiReturn.json`);
 				setWordDefinition(response.data[0]);
 				return response.data[0];
 			} catch (err) {
-				// alert('Error');
+				alert('Word not found!');
 				console.log(error);
+				return err;
 			}
 		},
-		cacheTime: 1000 * 60 * 5, // 5 minutes
-		staleTime: 1000 * 60 * 2, // 2 minutes
-		enabled: fetchData,
+		cacheTime: 1000 * 60 * 5, // 5 minutes // create a 5 minutes cache
+		staleTime: 1000 * 60 * 2, // 2 minutes // keep data stale for 2 minutes
+		enabled: false, // don't make an api request when the application is loaded
 	});
 
+	// If the search input is filled refetch data from api
 	useEffect(() => {
 		if (searchedWord.length > 0 && searchedWord !== '') {
-			// setFetchData(true);
 			refetch();
 		}
 	}, [searchedWord]);
 
 	console.log({ isFetching });
 
+	// useEffect(() => {
+	// 	if (!isFetching && wordMeaning) {
+	// 		console.log(wordMeaning);
+	// 		setWordDefinition(wordMeaning);
+	// 	}
+	// }, [isFetching]);
+
+	// If some error occurs on the api request, redirect user to home page
+	const navigate = useNavigate();
 	useEffect(() => {
-		if (!isFetching && wordMeaning) {
-			console.log(wordMeaning);
-			// setWordDefinition(wordMeaning);
+		if (isError) {
+			navigate('/');
 		}
-	}, [isFetching]);
+	}, [isError]);
 
 	return (
 		<WordContext.Provider
