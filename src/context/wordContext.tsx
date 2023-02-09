@@ -66,11 +66,12 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		queryFn: async () => {
 			// Get data from api and save it in the wordDefinition state
 			try {
-				const response: Response = await api.get(`/src/utils/apiReturn.json`);
+				const response: Response = await api.get(`/${searchedWord}`);
 				setWordDefinition(response.data[0]);
 				return response.data[0];
 			} catch (err) {
-				alert('Word not found!');
+				alert('Aconteceu algo de errado!');
+				navigate('/');
 				console.log(error);
 				return err;
 			}
