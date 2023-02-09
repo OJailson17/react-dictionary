@@ -2,6 +2,7 @@ import { Box, Flex, Grid, GridItem, SimpleGrid, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useWord } from '../../context/wordContext';
+import { changeArrayOrder } from '../../utils/changeArrayOrder';
 import { Divider } from '../Divider';
 
 interface WordDefinitionProps {
@@ -17,12 +18,16 @@ interface WordDefinitionProps {
 	origin?: string;
 }
 
-export const WordDefinition = ({ meanings, origin }: WordDefinitionProps) => {
-	// console.log({ meanings });
-
+export const WordDefinition = ({
+	meanings = [],
+	origin,
+}: WordDefinitionProps) => {
 	const { onSearchWord } = useWord();
 
 	const { word } = useParams();
+
+	const rightOrderMeanings = changeArrayOrder({ meanings });
+	console.log(rightOrderMeanings);
 
 	useEffect(() => {
 		onSearchWord(word || '');
@@ -43,7 +48,7 @@ export const WordDefinition = ({ meanings, origin }: WordDefinitionProps) => {
 				// justifyContent='center'
 				// alignItems={'center'}
 			>
-				{meanings?.map((meaning, i) => (
+				{rightOrderMeanings?.map((meaning, i) => (
 					<GridItem
 						h={'min-content'}
 						key={`${meaning.definitions} - ${i}`}
