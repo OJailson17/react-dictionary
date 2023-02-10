@@ -1,13 +1,12 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Divider } from '../../components/Divider';
+import { LoadingScreen } from '../../components/Loading';
 import { SearchWord } from '../../components/SearchWord';
 import { WordComponent } from '../../components/Word';
 import { WordDefinition } from '../../components/WordDefinition';
 import { WordExtraInfo } from '../../components/WordExtraInfo';
 import { useWord } from '../../context/wordContext';
-import { api } from '../../lib/axios';
 
 interface WordDefinitionProps {
 	word: string;
@@ -33,26 +32,18 @@ interface Response {
 }
 
 export const WordDefinitionPage = () => {
-	// const [wordDefinition, setWordDefinition] = useState(
-	// 	{} as WordDefinitionProps,
-	// );
-
 	const { word } = useParams();
 
 	const location = useLocation();
 
 	const { wordDefinition, onSearchWord } = useWord();
 
-	// Make request to get word definition
-	// const handleSearchWord = async () => {
-	// 	const response: Response = await api.get('/src/utils/apiReturn.json');
-	// 	const definition = response.data;
-	// 	setWordDefinition(definition[0]);
-	// };
-
 	useEffect(() => {
 		onSearchWord(word || '');
 	}, [location.pathname]);
+
+	// If the word definition is loading show loading screen
+	if (!wordDefinition.meanings) return <LoadingScreen />;
 
 	return (
 		<>
@@ -72,8 +63,6 @@ export const WordDefinitionPage = () => {
 
 				{wordDefinition.origin && (
 					<Box flex={'1'}>
-						{/* <WordExtraInfo title='Phrases' data='Some random phrase' /> */}
-						{/* <Divider /> */}
 						<WordExtraInfo title='Origin' data={wordDefinition.origin} />
 					</Box>
 				)}

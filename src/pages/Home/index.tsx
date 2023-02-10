@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { LoadingScreen } from '../../components/Loading';
 import { SearchWord } from '../../components/SearchWord';
 
 // Sentence animation
