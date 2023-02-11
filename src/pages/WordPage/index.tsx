@@ -36,14 +36,14 @@ export const WordDefinitionPage = () => {
 
 	const location = useLocation();
 
-	const { wordDefinition, onSearchWord } = useWord();
+	const { wordDefinition, onSearchWord, isFetching } = useWord();
 
 	useEffect(() => {
 		onSearchWord(word || '');
 	}, [location.pathname]);
 
 	// If the word definition is loading show loading screen
-	if (!wordDefinition.meanings) return <LoadingScreen />;
+	if (!wordDefinition.meanings || isFetching) return <LoadingScreen />;
 
 	return (
 		<>

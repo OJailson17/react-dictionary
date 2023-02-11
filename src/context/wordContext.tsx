@@ -40,6 +40,7 @@ interface WordContextProps {
 	searchedWord: string;
 	onSearchWord: (word: string) => void;
 	wordDefinition: WordDefinitionProps;
+	isFetching: boolean;
 }
 
 const WordContext = createContext({} as WordContextProps);
@@ -88,15 +89,6 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		}
 	}, [searchedWord]);
 
-	console.log({ isFetching });
-
-	// useEffect(() => {
-	// 	if (!isFetching && wordMeaning) {
-	// 		console.log(wordMeaning);
-	// 		setWordDefinition(wordMeaning);
-	// 	}
-	// }, [isFetching]);
-
 	// If some error occurs on the api request, redirect user to home page
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -107,7 +99,12 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 
 	return (
 		<WordContext.Provider
-			value={{ searchedWord, onSearchWord: handleSearchWord, wordDefinition }}
+			value={{
+				searchedWord,
+				onSearchWord: handleSearchWord,
+				wordDefinition,
+				isFetching,
+			}}
 		>
 			{children}
 		</WordContext.Provider>
