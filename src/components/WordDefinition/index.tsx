@@ -27,7 +27,6 @@ export const WordDefinition = ({
 	const { word } = useParams();
 
 	const rightOrderMeanings = changeArrayOrder({ meanings });
-	console.log(rightOrderMeanings);
 
 	useEffect(() => {
 		onSearchWord(word || '');
@@ -39,12 +38,12 @@ export const WordDefinition = ({
 				// h={['100%']}
 				// bg='red'
 				templateRows={['1fr 1fr']}
-				templateColumns={['repeat(2, 1fr)']}
+				templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
 				// gridRow={'1fr 1fr'}
 				// columns={[2]}
 				columnGap={'12'}
 				// rowGap='2'
-				padding={['5']}
+				paddingY={['5']}
 				// justifyContent='center'
 				// alignItems={'center'}
 			>
@@ -60,7 +59,7 @@ export const WordDefinition = ({
 
 						{meaning.definitions.map((def, i) => (
 							<Box key={`${def.definition} - ${i}`}>
-								<Text fontSize={['24']} mt={['4']}>
+								<Text fontSize={['20', '24']} mt={['4']}>
 									{def.definition}
 								</Text>
 

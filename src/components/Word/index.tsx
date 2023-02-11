@@ -31,16 +31,18 @@ export const WordComponent = ({ audio, word }: WordComponentProps) => {
 			<Flex
 				as='section'
 				h={['56']}
-				px={['16']}
+				px={['10', '10', '10', '16', '16']}
 				align='center'
 				justify={['space-between']}
+				// direction={['column']}
 				borderBottom='2px'
 				borderColor={'#363535'}
+				// bg='red'
 			>
-				<Text fontSize={['96']}>{word}</Text>
+				<Text fontSize={['50', '50', '80', '90', '96']}>{word}</Text>
 
 				<Button
-					w={['56']}
+					w={['20', '24', '40', '56', '56']}
 					border={'1px'}
 					borderRadius={'full'}
 					bg='transparent'
@@ -51,34 +53,15 @@ export const WordComponent = ({ audio, word }: WordComponentProps) => {
 				>
 					<PlayCircle size={24} weight='fill' />
 
-					<Text fontWeight={'normal'} fontSize={['sm']}>
+					<Text
+						fontWeight={'normal'}
+						fontSize={['sm']}
+						display={['none', 'flex']}
+					>
 						{phoneticText}
 					</Text>
 				</Button>
 			</Flex>
-			{/* {synonyms.length > 0 && (
-				<Flex mt={['4']} wrap='wrap'>
-					<Text mr={['6']}>synonyms:</Text>
-
-					{synonyms.map((el, i) => (
-						<Text color={'blue.500'} mx={'1'} key={`${el} - ${i}`}>
-							{el},
-						</Text>
-					))}
-				</Flex>
-			)}
-
-			{antonyms.length > 0 && (
-				<Flex mt={['4']} wrap='wrap'>
-					<Text mr={['6']}>antonyms:</Text>
-
-					{antonyms.map((el, i) => (
-						<Text color={'blue.500'} mx={'1'} key={`${el} - ${i}`}>
-							{el},
-						</Text>
-					))}
-				</Flex>
-			)} */}
 		</Box>
 	);
 };

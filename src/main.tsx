@@ -13,12 +13,10 @@ import { WordContextProvider } from './context/wordContext';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<ReactQueryDevtools initialIsOpen={false} />
-			<ChakraProvider theme={theme}>
-				<App />
-			</ChakraProvider>
-		</QueryClientProvider>
-	</React.StrictMode>,
+	<QueryClientProvider client={queryClient}>
+		<ReactQueryDevtools initialIsOpen={false} />
+		<ChakraProvider theme={theme}>
+			<App />
+		</ChakraProvider>
+	</QueryClientProvider>,
 );

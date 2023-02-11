@@ -55,7 +55,7 @@ export const WordDefinitionPage = () => {
 				/>
 			)}
 
-			<Flex px={['16']} mb={['28']}>
+			<Flex px={['10', '10', '10', '16', '16']} mb={['28']}>
 				<WordDefinition
 					meanings={wordDefinition.meanings}
 					origin={wordDefinition.origin}

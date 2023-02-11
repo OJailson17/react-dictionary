@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { LoadingScreen } from '../../components/Loading';
 import { SearchWord } from '../../components/SearchWord';
 
 // Sentence animation
@@ -46,7 +45,7 @@ export const Home = () => {
 				{wordTitle.split('').map((char, index) => (
 					<Text
 						as={motion.h1}
-						fontSize={['96']}
+						fontSize={['50', '50', '80', '90', '96']}
 						mt={['10']}
 						key={`${char} - ${index}`}
 						variants={letter}
@@ -55,7 +54,7 @@ export const Home = () => {
 					</Text>
 				))}
 			</Flex>
-			<SearchWord isHomePage />
+			<SearchWord />
 		</Box>
 	);
 };

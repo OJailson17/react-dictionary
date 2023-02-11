@@ -1,52 +1,46 @@
 import { Button, Flex, FormControl, Input } from '@chakra-ui/react';
 import { MagnifyingGlass } from 'phosphor-react';
-import { FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useWord } from '../../context/wordContext';
+import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface SearchWordProps {
-	isHomePage?: boolean;
-}
-
-export const SearchWord = ({ isHomePage = false }: SearchWordProps) => {
+export const SearchWord = () => {
 	const [word, setWord] = useState('');
-
-	const { onSearchWord } = useWord();
 
 	const navigate = useNavigate();
 
 	const handleSearchWord = (e: FormEvent) => {
 		e.preventDefault();
 
-		navigate(`/word/${word}`);
-		// onSearchWord(word);
-		// if (isHomePage) {
-		// } else {
-		// }
+		if (word !== '') {
+			navigate(`/word/${word}`);
+		}
 	};
 
 	return (
 		<FormControl
 			as={'form'}
-			maxW={['40%']}
+			maxW={['90%', '80%', '60%', '40%']}
 			marginX='auto'
 			marginY={'12'}
 			position='relative'
 			onSubmit={handleSearchWord}
+			autoComplete='off'
 		>
 			<Flex position={'relative'}>
 				<Input
 					placeholder='Search word'
-					paddingRight={'20%'}
 					onChange={e => setWord(e.target.value)}
+					required
+					borderRightRadius='0'
 				/>
 				<Button
 					width={['20%']}
 					maxW={'24'}
-					position={'absolute'}
 					right='0'
 					bg='transparent'
-					border={['1px']}
+					border={'1px'}
+					borderLeft='none'
+					borderLeftRadius='0'
 					_hover={{
 						background: '#272727',
 					}}
