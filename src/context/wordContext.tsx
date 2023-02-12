@@ -7,6 +7,7 @@ import {
 	useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { api } from '../lib/axios';
 
 interface WordContextProviderProps {
@@ -56,22 +57,23 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		setSearchedWord(word);
 	};
 
-	const {
-		data: wordMeaning,
-		error,
-		isFetching,
-		refetch,
-		isError,
-	} = useQuery({
+	const { error, isFetching, refetch, isError } = useQuery({
 		queryKey: ['word'],
 		queryFn: async () => {
 			// Get data from api and save it in the wordDefinition state
 			try {
-				const response: Response = await api.get(`/${searchedWord}`);
+				const response: Response = await api.get(`/${searchedWord}`, {
+					timeout: 10000,
+				});
 				setWordDefinition(response.data[0]);
 				return response.data[0];
 			} catch (err) {
-				alert('Aconteceu algo de errado!');
+				toast('Something went wrong!', {
+					position: 'top-center',
+					type: 'error',
+					theme: 'dark',
+					autoClose: 3000,
+				});
 				navigate('/');
 				console.log(error);
 				return err;
