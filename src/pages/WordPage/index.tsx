@@ -1,6 +1,7 @@
-import { Box, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useLocation, useParams } from 'react-router-dom';
+
 import { LoadingScreen } from '../../components/Loading';
 import { SearchWord } from '../../components/SearchWord';
 import { WordComponent } from './components/Word';

@@ -1,7 +1,7 @@
-import { Button, Flex, FormControl, Input } from '@chakra-ui/react';
-import { MagnifyingGlass } from 'phosphor-react';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Flex, FormControl, Input } from '@chakra-ui/react';
+import { MagnifyingGlass } from 'phosphor-react';
 
 export const SearchWord = () => {
 	const [word, setWord] = useState('');
