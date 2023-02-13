@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { LoadingScreen } from '../../components/Loading';
 import { SearchWord } from '../../components/SearchWord';
-import { WordComponent } from '../../components/Word';
-import { WordDefinition } from '../../components/WordDefinition';
-import { WordExtraInfo } from '../../components/WordExtraInfo';
+import { WordComponent } from './components/Word';
+import { WordDefinition } from './components/WordDefinition';
+import { WordExtraInfo } from './components/WordExtraInfo';
 import { useWord } from '../../context/wordContext';
 
 interface WordDefinitionProps {

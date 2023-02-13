@@ -1,7 +1,7 @@
 import { Box, Button, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { PlayCircle } from 'phosphor-react';
 import { useState } from 'react';
-import { useWord } from '../../context/wordContext';
+import { useWord } from '../../../../context/wordContext';
 
 interface WordComponentProps {
 	word: string;

@@ -1,8 +1,8 @@
 import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useWord } from '../../context/wordContext';
-import { Divider } from '../Divider';
+import { useWord } from '../../../../context/wordContext';
+import { Divider } from '../../../../components/Divider';
 
 interface WordDefinitionProps {
 	meanings?: {
