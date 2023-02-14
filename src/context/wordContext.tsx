@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import {
 	createContext,
 	ReactNode,
@@ -52,6 +53,8 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		{} as WordDefinitionProps,
 	);
 
+	const navigate = useNavigate();
+
 	// Set word from input search to state
 	const handleSearchWord = async (word: string) => {
 		setSearchedWord(word);
@@ -65,18 +68,25 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 				const response: Response = await api.get(`/${searchedWord}`, {
 					timeout: 10000,
 				});
+
 				setWordDefinition(response.data[0]);
 				return response.data[0];
 			} catch (err) {
-				toast('Something went wrong!', {
-					position: 'top-center',
-					type: 'error',
-					theme: 'dark',
-					autoClose: 3000,
-				});
-				navigate('/');
-				console.log(error);
-				return err;
+				if (err instanceof AxiosError) {
+					toast(
+						err.response?.status === 404
+							? 'Word not found'
+							: 'Something went wrong!',
+						{
+							position: 'top-center',
+							type: 'error',
+							theme: 'dark',
+							autoClose: 3000,
+						},
+					);
+					navigate('/');
+					console.log(err);
+				}
 			}
 		},
 		cacheTime: 1000 * 60 * 5, // 5 minutes // create a 5 minutes cache
@@ -92,12 +102,14 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 	}, [searchedWord]);
 
 	// If some error occurs on the api request, redirect user to home page
-	const navigate = useNavigate();
-	useEffect(() => {
-		if (isError) {
-			navigate('/');
-		}
-	}, [isError]);
+
+	// useEffect(() => {
+	// 	if (isError) {
+	// 		navigate('/');
+	// 	}
+	// }, [isError]);
+
+	console.log({ error, isError });
 
 	return (
 		<WordContext.Provider
