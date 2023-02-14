@@ -22,22 +22,23 @@ export const WordComponent = ({ audio, word }: WordComponentProps) => {
 	// Find the first audio element that contains a text property
 	const phoneticText = audio?.find(pho => pho.text)?.text;
 
-	// console.log({ audioPronunciation });
-
 	return (
 		<Box>
 			<Flex
 				as='section'
 				h={['56']}
 				px={['10', '10', '10', '16', '16']}
+				py={['4']}
 				align='center'
-				justify={['space-between']}
-				// direction={['column']}
+				justify={['space-evenly', 'space-between']}
+				direction={['column', 'row']}
 				borderBottom='2px'
 				borderColor={'#363535'}
 				// bg='red'
 			>
-				<Text fontSize={['50', '50', '80', '90', '96']}>{word}</Text>
+				<Text fontSize={['50', '50', '80', '90', '96']} wordBreak='break-word'>
+					{word}
+				</Text>
 
 				<Button
 					w={['20', '24', '40', '56', '56']}
@@ -54,7 +55,7 @@ export const WordComponent = ({ audio, word }: WordComponentProps) => {
 					<Text
 						fontWeight={'normal'}
 						fontSize={['sm']}
-						display={['none', 'flex']}
+						display={['none', 'none', 'flex']}
 					>
 						{phoneticText}
 					</Text>
