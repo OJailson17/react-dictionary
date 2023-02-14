@@ -60,7 +60,10 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 		setSearchedWord(word);
 	};
 
-	const { error, isFetching, refetch, isError } = useQuery({
+	const CACHE_TIME_IN_MINUTES = 1000 * 60 * 5; // create a 5 minutes cache
+	const STALE_TIME_IN_MINUTES = 1000 * 60 * 2; // keep data stale for 2 minutes
+
+	const { isFetching, refetch } = useQuery({
 		queryKey: ['word'],
 		queryFn: async () => {
 			// Get data from api and save it in the wordDefinition state
@@ -72,6 +75,7 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 				setWordDefinition(response.data[0]);
 				return response.data[0];
 			} catch (err) {
+				// If error is 404 show word not found message if not, show generic message
 				if (err instanceof AxiosError) {
 					toast(
 						err.response?.status === 404
@@ -89,8 +93,8 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 				}
 			}
 		},
-		cacheTime: 1000 * 60 * 5, // 5 minutes // create a 5 minutes cache
-		staleTime: 1000 * 60 * 2, // 2 minutes // keep data stale for 2 minutes
+		cacheTime: CACHE_TIME_IN_MINUTES,
+		staleTime: STALE_TIME_IN_MINUTES,
 		enabled: false, // don't make an api request when the application is loaded
 	});
 
@@ -100,16 +104,6 @@ export const WordContextProvider = ({ children }: WordContextProviderProps) => {
 			refetch();
 		}
 	}, [searchedWord]);
-
-	// If some error occurs on the api request, redirect user to home page
-
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		navigate('/');
-	// 	}
-	// }, [isError]);
-
-	console.log({ error, isError });
 
 	return (
 		<WordContext.Provider
